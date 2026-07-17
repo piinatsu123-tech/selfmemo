@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>セルフモニタリング</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <h1 id="view-title">今日の記録</h1>
+  <button id="settings-btn" class="icon-btn" aria-label="設定">⚙︎</button>
+</header>
+
+<main id="main">
+
+  <!-- ===== 記録 ===== -->
+  <section id="view-record" class="view">
+    <div class="date-nav card">
+      <button id="date-prev" class="icon-btn" aria-label="前の日">‹</button>
+      <div class="date-nav-center">
+        <div id="record-date-label" class="date-label">今日</div>
+        <button id="date-today" class="mini-btn">今日へ</button>
+      </div>
+      <button id="date-next" class="icon-btn" aria-label="次の日">›</button>
+    </div>
+
+    <!-- ① 睡眠 -->
+    <div class="card">
+      <h2 class="card-title">① 睡眠</h2>
+      <div class="time-row">
+        <label class="time-field">
+          <span>就寝時刻</span>
+          <input type="time" id="f-bedTime">
+        </label>
+        <label class="time-field">
+          <span>起床時刻</span>
+          <input type="time" id="f-wakeTime">
+        </label>
+      </div>
+      <div class="sleep-duration">睡眠時間：<strong id="sleep-duration-label">--</strong></div>
+      <div class="slider-field" data-key="sleepQuality">
+        <div class="slider-head"><span>睡眠の質</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-sleepQuality">
+        <div class="slider-hints"><span>悪い</span><span>良い</span></div>
+      </div>
+    </div>
+
+    <!-- ② エネルギー -->
+    <div class="card">
+      <h2 class="card-title">② エネルギー</h2>
+      <div class="slider-field">
+        <div class="slider-head"><span>朝</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-energyMorning">
+        <div class="slider-hints"><span>0</span><span>10</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>昼</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-energyNoon">
+        <div class="slider-hints"><span>0</span><span>10</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>夜</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-energyEvening">
+        <div class="slider-hints"><span>0</span><span>10</span></div>
+      </div>
+    </div>
+
+    <!-- ③ 頭の状態 -->
+    <div class="card">
+      <h2 class="card-title">③ 頭の状態</h2>
+      <div class="slider-field">
+        <div class="slider-head"><span>頭の静かさ</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-mindNoise">
+        <div class="slider-hints"><span>とても静か</span><span>おしゃべりが止まらない</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>アイデア量</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-ideaFlow">
+        <div class="slider-hints"><span>全く浮かばない</span><span>次々浮かぶ</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>感情の揺れ</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-moodSwing">
+        <div class="slider-hints"><span>落ち着いている</span><span>とても揺れやすい</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>不安</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-anxiety">
+        <div class="slider-hints"><span>全くない</span><span>とても強い</span></div>
+      </div>
+      <div class="slider-field">
+        <div class="slider-head"><span>身体のだるさ</span><output>5</output></div>
+        <input type="range" min="0" max="10" step="1" value="5" id="f-fatigue">
+        <div class="slider-hints"><span>全くない</span><span>非常に強い</span></div>
+      </div>
+    </div>
+
+    <!-- ④ 今日の集中状態 -->
+    <div class="card">
+      <h2 class="card-title">④ 今日の集中状態</h2>
+      <div class="radio-list" id="focus-group" role="radiogroup" aria-label="今日の集中状態">
+        <label class="radio-row"><input type="radio" name="focus" value="single"><span>一つのことを進められた</span></label>
+        <label class="radio-row"><input type="radio" name="focus" value="multi"><span>色々始めた</span></label>
+        <label class="radio-row"><input type="radio" name="focus" value="none"><span>何も始められなかった</span></label>
+        <label class="radio-row"><input type="radio" name="focus" value="other"><span>その他</span></label>
+      </div>
+    </div>
+
+    <!-- ⑤ 今日の脳タイプ -->
+    <div class="card">
+      <h2 class="card-title">⑤ 今日の脳タイプ</h2>
+      <div class="brain-grid" id="brain-group" role="radiogroup" aria-label="今日の脳タイプ">
+        <label class="brain-cell" data-type="fog">
+          <input type="radio" name="brainType" value="fog">
+          <span class="brain-kanji">霧</span>
+          <span class="brain-desc">ぼーっとして何もできない</span>
+        </label>
+        <label class="brain-cell" data-type="calm">
+          <input type="radio" name="brainType" value="calm">
+          <span class="brain-kanji">静</span>
+          <span class="brain-desc">落ち着いて集中できた</span>
+        </label>
+        <label class="brain-cell" data-type="scatter">
+          <input type="radio" name="brainType" value="scatter">
+          <span class="brain-kanji">散</span>
+          <span class="brain-desc">アイデアは多いが散らかった</span>
+        </label>
+        <label class="brain-cell" data-type="storm">
+          <input type="radio" name="brainType" value="storm">
+          <span class="brain-kanji">嵐</span>
+          <span class="brain-desc">感情・思考とも激しく疲れた</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ⑥⑦⑧ テキスト -->
+    <div class="card">
+      <h2 class="card-title">⑥ 今日やったこと</h2>
+      <textarea id="f-didToday" rows="3" placeholder="短い箇条書きで十分"></textarea>
+    </div>
+    <div class="card">
+      <h2 class="card-title">⑦ 思いついたこと</h2>
+      <textarea id="f-ideas" rows="3" placeholder="アイデアの避難場所（#タグ も使えます）"></textarea>
+    </div>
+    <div class="card">
+      <h2 class="card-title">⑧ メモ</h2>
+      <textarea id="f-memo" rows="3" placeholder="自由に（#タグ も使えます）"></textarea>
+    </div>
+
+    <button id="save-btn" class="primary-btn">保存する</button>
+    <button id="delete-btn" class="danger-link hidden">この日の記録を削除</button>
+  </section>
+
+  <!-- ===== カレンダー ===== -->
+  <section id="view-calendar" class="view hidden">
+    <div class="card">
+      <div class="cal-header">
+        <button id="cal-prev" class="icon-btn" aria-label="前の月">‹</button>
+        <div id="cal-title" class="cal-title">2026年7月</div>
+        <button id="cal-next" class="icon-btn" aria-label="次の月">›</button>
+      </div>
+      <div class="cal-weekdays">
+        <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span class="wd-sat">土</span><span class="wd-sun">日</span>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+      <div class="cal-legend">
+        <span class="legend-item"><i class="dot bt-fog"></i>霧</span>
+        <span class="legend-item"><i class="dot bt-calm"></i>静</span>
+        <span class="legend-item"><i class="dot bt-scatter"></i>散</span>
+        <span class="legend-item"><i class="dot bt-storm"></i>嵐</span>
+        <span class="legend-item"><i class="dot bt-none"></i>記録のみ</span>
+      </div>
+    </div>
+    <div class="card" id="cal-month-summary"></div>
+  </section>
+
+  <!-- ===== グラフ ===== -->
+  <section id="view-chart" class="view hidden">
+    <div class="card">
+      <div class="seg-control" id="chart-range" role="group" aria-label="表示期間">
+        <button data-days="7">7日</button>
+        <button data-days="30" class="active">30日</button>
+        <button data-days="90">90日</button>
+        <button data-days="0">全期間</button>
+      </div>
+      <div class="metric-chips" id="metric-chips"></div>
+      <div id="chart-wrap" class="chart-wrap"></div>
+      <div id="chart-tooltip" class="chart-tooltip hidden"></div>
+      <details class="table-details">
+        <summary>表で見る</summary>
+        <div id="chart-table" class="table-scroll"></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== 分析 ===== -->
+  <section id="view-analysis" class="view hidden">
+    <div class="card">
+      <h2 class="card-title">集中できた日の特徴</h2>
+      <p class="hint">「一つのことを進められた」日と、それ以外の日の平均値を比較します。</p>
+      <div id="focus-summary" class="table-scroll"></div>
+    </div>
+    <div class="card">
+      <h2 class="card-title">脳タイプ別集計</h2>
+      <div id="brain-summary" class="table-scroll"></div>
+    </div>
+    <div class="card">
+      <h2 class="card-title">相関分析</h2>
+      <div class="seg-control" id="corr-method" role="group" aria-label="相関係数の種類">
+        <button data-method="pearson" class="active">Pearson</button>
+        <button data-method="spearman">Spearman</button>
+      </div>
+      <div class="corr-custom">
+        <select id="corr-x"></select>
+        <span class="corr-x-mark">×</span>
+        <select id="corr-y"></select>
+      </div>
+      <div id="corr-custom-result" class="corr-result"></div>
+      <h3 class="sub-title">主なペア</h3>
+      <div id="corr-presets" class="table-scroll"></div>
+      <p class="hint">※ 相関は関連の強さを示すもので、因果関係を意味しません。集中状態は順序尺度（0=何も始められなかった / 1=色々始めた / 2=一つのことを進められた）として扱うため、Spearmanが適しています。</p>
+    </div>
+    <div class="card">
+      <h2 class="card-title">曜日分析</h2>
+      <div id="weekday-analysis"></div>
+    </div>
+  </section>
+
+  <!-- ===== 検索 ===== -->
+  <section id="view-search" class="view hidden">
+    <div class="card">
+      <input type="search" id="search-input" placeholder="メモ・アイデア・やったことを全文検索" autocomplete="off">
+      <div id="tag-chips" class="tag-chips"></div>
+    </div>
+    <div id="search-results"></div>
+  </section>
+
+</main>
+
+<!-- タブバー -->
+<nav class="tabbar" role="tablist">
+  <button class="tab active" data-view="record" role="tab" aria-selected="true"><span class="tab-icon">✏️</span><span>記録</span></button>
+  <button class="tab" data-view="calendar" role="tab" aria-selected="false"><span class="tab-icon">📅</span><span>カレンダー</span></button>
+  <button class="tab" data-view="chart" role="tab" aria-selected="false"><span class="tab-icon">📈</span><span>グラフ</span></button>
+  <button class="tab" data-view="analysis" role="tab" aria-selected="false"><span class="tab-icon">🔍</span><span>分析</span></button>
+  <button class="tab" data-view="search" role="tab" aria-selected="false"><span class="tab-icon">📝</span><span>検索</span></button>
+</nav>
+
+<!-- 設定モーダル -->
+<div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="設定">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2>設定</h2>
+      <button id="settings-close" class="icon-btn" aria-label="閉じる">✕</button>
+    </div>
+    <div class="settings-section">
+      <h3>テーマ</h3>
+      <div class="seg-control" id="theme-control" role="group" aria-label="テーマ">
+        <button data-theme="auto" class="active">自動</button>
+        <button data-theme="light">ライト</button>
+        <button data-theme="dark">ダーク</button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>データ</h3>
+      <button class="list-btn" id="export-csv">CSVエクスポート</button>
+      <button class="list-btn" id="export-json">JSONエクスポート</button>
+      <label class="list-btn" for="import-json">JSONインポート
+        <input type="file" id="import-json" accept=".json,application/json" hidden>
+      </label>
+      <button class="list-btn" id="demo-data">デモデータを投入（お試し用）</button>
+      <button class="list-btn destructive" id="clear-data">すべての記録を削除</button>
+    </div>
+    <p class="hint">データはこの端末のブラウザ内（localStorage）にのみ保存されます。機種変更やブラウザデータ削除の前にエクスポートしてください。</p>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="js/store.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/record.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/analysis.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
